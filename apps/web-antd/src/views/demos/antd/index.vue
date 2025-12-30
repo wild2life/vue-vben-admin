@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+import { onMounted, watch } from 'vue';
+import { useRoute } from 'vue-router';
+
 import { Page } from '@vben/common-ui';
 
 import { Button, Card, message, notification, Space } from 'ant-design-vue';
@@ -30,6 +33,21 @@ function notify(type: NotificationType) {
     type,
   });
 }
+
+const route = useRoute();
+
+onMounted(() => {
+  console.log('route query:', route.query); // route query: {}
+  console.log(route.query.build_template_id); // undefined
+});
+
+watch(
+  () => route.query,
+  (newQuery) => {
+    console.log('route query changed:', newQuery); // route query changed: {}
+  },
+  { immediate: true },
+);
 </script>
 
 <template>
